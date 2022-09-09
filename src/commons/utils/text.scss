@@ -1,0 +1,37 @@
+@import '../variables/color.scss';
+
+.t {
+    // &-center {
+    //     text-align: center;
+    // }
+    // &-left {
+    //     text-align: left;
+    // }
+    // &-right {
+    //     text-align: right;
+    // }
+    // &-end {
+    //     text-align: end;
+    // }
+    // &-justify {
+    //     text-align: justify;
+    // }
+    &-link {
+        color: #20bcfa;
+        &:hover,
+        &:active {
+            text-decoration: underline;
+        }
+    }
+    &-color {
+        &-primary {
+            color: $text-color-primary;
+        }
+        &-secondary {
+            color: $color-secondary;
+        }
+        &-gray {
+            color: #888;
+        }
+    }
+}

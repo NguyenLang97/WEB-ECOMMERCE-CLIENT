@@ -1,0 +1,53 @@
+@import '../../../../commons/variables/color.scss';
+.cart__item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #fde4e4;
+    .cart__content {
+        img {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+        }
+        .cart__product-info {
+            .cart__item {
+                flex: 1;
+                &-title {
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                }
+                &-price {
+                    font-size: 0.8rem;
+                    span {
+                        font-size: 0.9rem;
+                        font-weight: 600;
+                        color: $color-secondary;
+                    }
+                }
+                .cart__btn {
+                    background: #fde4e4;
+                    padding: 2px 5px;
+                    border-radius: 5px;
+                    &-increase {
+                        cursor: pointer;
+                    }
+                    &-decrease {
+                        @extend .cart__btn-increase;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .cart__delete {
+                cursor: pointer;
+                font-size: 1.4rem;
+                color: red;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .cart__delete {
+        font-size: 1rem;
+    }
+}
