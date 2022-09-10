@@ -55,7 +55,7 @@ const Checkout = () => {
             cartItems,
             totalQuantity,
             totalAmountOrder,
-            status: 'Đặt hàng thành công',
+            status: 'Success',
         }
 
         console.log({ userShippingAddress })

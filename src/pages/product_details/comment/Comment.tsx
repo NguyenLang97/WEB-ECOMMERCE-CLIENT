@@ -133,10 +133,6 @@ const Comment = () => {
                 </div>
             </Col>
             {isAuth ? (
-                <Link to={'/login'}>
-                    <h3 className="text-center mt-5 t-color-secondary">Đăng nhập để nhận xét</h3>
-                </Link>
-            ) : (
                 <form className="comment__form-group d-flex flex-wrap flex-row  mt-4" onSubmit={commentHandler}>
                     <div className="comment__form-container w-100 p-4 d-flex flex-row ">
                         <div className="comment__form">
@@ -181,6 +177,10 @@ const Comment = () => {
                         )}
                     </div>
                 </form>
+            ) : (
+                <Link to={'/login'}>
+                    <h3 className="text-center mt-5 t-color-secondary">Đăng nhập để nhận xét</h3>
+                </Link>
             )}
         </div>
     )
