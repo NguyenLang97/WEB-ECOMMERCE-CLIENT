@@ -317,22 +317,34 @@ const AllProducts = () => {
             filterProduct(e.key)
         }
     }
-    console.log('filter', filter)
 
     const handleChangeFilter = (e: any) => {
         if (e.target.value === 'highprice') {
-            const highprice = allProducts.sort((a, b) => b.price - a.price)
+            // if (current !== 'ALL') {
+            const updateProduct = allProducts.filter((item: any) => item.category === current)
+            console.log('current', current)
+
+            const highprice = current === 'ALL' ? allProducts.sort((a, b) => b.price - a.price) : updateProduct.sort((a, b) => b.price - a.price)
             console.log(highprice)
+            console.log('filter', filter)
 
             setFilter(highprice)
+            // }
         }
         if (e.target.value === 'lowprice') {
-            const highprice = allProducts.sort((a, b) => a.price - b.price)
-            console.log(highprice)
+            const updateProduct = allProducts.filter((item: any) => item.category === current)
+            console.log('current', current)
 
-            setFilter(highprice)
+            const lowprice = current === 'ALL' ? allProducts.sort((a, b) => a.price - b.price) : updateProduct.sort((a, b) => a.price - b.price)
+
+            console.log(lowprice)
+            console.log('filter', filter)
+
+            setFilter(lowprice)
         }
     }
+
+    console.log('filter', filter)
 
     return (
         <Helmet title="All-Products">
@@ -400,7 +412,7 @@ const AllProducts = () => {
                     ))}
                 </Row>
 
-                <Row >
+                <Row>
                     <Col span={24}>
                         <ReactPaginate pageCount={pageCount} onPageChange={changePage} previousLabel={'Prev'} nextLabel={'Next'} containerClassName=" paginationBttns " />
                     </Col>

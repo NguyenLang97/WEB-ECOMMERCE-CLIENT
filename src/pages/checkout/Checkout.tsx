@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Button, Col, message, Row, Tooltip, Input } from 'antd'
+import { useDispatch } from 'react-redux'
 
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
@@ -10,6 +11,7 @@ import { db } from '../../firebase/firebase_config'
 import './checkout.scss'
 import CartTable from '../cart_page/cartTable/CartTable'
 import SuccessfulTransaction from '../../components/successful_transaction/SuccessfulTransaction'
+import { resetCart } from '../../store/cart/cart.action'
 import RootReducerState from '../../models/root_reducer'
 import CartItemsState from '../../models/cart_items'
 import { Link } from 'react-router-dom'
@@ -17,9 +19,7 @@ import { Link } from 'react-router-dom'
 const Checkout = () => {
     const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
     const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
-    console.log({ totalQuantity })
     const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
-    console.log({ cartItems })
     const address = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.address)
     const phone = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.phone)
     const fullname = useSelector((state: RootReducerState) => state.AuthReducer.infoUser.fullname)
@@ -29,6 +29,7 @@ const Checkout = () => {
     const isAuth = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
 
     console.log({ userId })
+    const dispatch = useDispatch()
 
     const [enterFullName, setEnterFullName] = useState(fullname)
     const [enterEmail, setEnterEmail] = useState(email)
@@ -46,6 +47,9 @@ const Checkout = () => {
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         // setIsOrderSuccess(true)
         e.preventDefault()
+        cartItems.map(async (item: CartItemsState) => {
+            item.total = Number(item.total) - Number(item.quantity)
+        })
         const userShippingAddress = {
             name: enterFullName,
             email: enterEmail,
@@ -74,7 +78,7 @@ const Checkout = () => {
         cartItems.map(async (item: CartItemsState) => {
             try {
                 await updateDoc(doc(db, 'products', item.id as string), {
-                    total: Number(item.total) - Number(item.quantity),
+                    total: item.total,
                 })
             } catch (err) {
                 message.error('Vui lòng xem lại số lượng trên hệ thống', 2)
@@ -85,9 +89,8 @@ const Checkout = () => {
             message.success('Đặt hàng thành công', 2)
             setIsOrderSuccess(true)
         }, 1000)
+        dispatch(resetCart())
     }
-    console.log({ isOrderSuccess })
-    console.log('total', data)
 
     return (
         <div className="container">
@@ -118,7 +121,7 @@ const Checkout = () => {
                                     <div className="mb-4 ">
                                         <label htmlFor="">Số điện thoại</label>
 
-                                        <Input type="number" placeholder="Phone number" defaultValue={enterPhone} required onChange={(e) => setEnterPhone(e.target.value)} />
+                                        <Input min={0} type="number" placeholder="Phone number" defaultValue={enterPhone} required onChange={(e) => setEnterPhone(e.target.value)} />
                                     </div>
                                     <div className="mb-4 ">
                                         <label htmlFor="">Địa chỉ nhận hàng</label>

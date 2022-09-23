@@ -10,7 +10,8 @@
                 cursor: pointer;
                 transition: all ease-in-out 0.3s;
                 &:hover {
-                    color: $color-secondary;
+                    color: #fff;
+                    background-color: #40a9ff;
                 }
             }
         }

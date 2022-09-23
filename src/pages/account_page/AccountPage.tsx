@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 // import { logoutStart } from '../../redux/action'
 import { Row, Col } from 'antd'
 import './account_page.scss'
@@ -15,11 +15,19 @@ import { logoutStart } from '../../store/auth/auth.action'
 import RootReducerState from '../../models/root_reducer'
 
 function AccountPage() {
+    const { pathname } = useLocation()
+    console.log(location)
+
     const dispatch = useDispatch()
     const [activeKey, setActiveKey] = useState('')
+    console.log({ activeKey })
 
     const img = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.img)
     const username = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.username)
+
+    useEffect(() => {
+        if (pathname === '/account/orders') setActiveKey('orders')
+    }, [pathname])
 
     const menu = [
         {
@@ -76,10 +84,10 @@ function AccountPage() {
                     </>
                 )
             default:
-                ;<>
-                    <h2 className="m-b-16">Thông tin tài khoản</h2>
-                    <ProfileUser />
-                </>
+            // ;<>
+            //     <h2 className="m-b-16">Thông tin tài khoản</h2>
+            //     <ProfileUser />
+            // </>
         }
     }
 
@@ -95,7 +103,7 @@ function AccountPage() {
                     <ul className="list-group d-flex flex-column ">
                         {menu.map((item, index) => (
                             <Link key={index} to={`${item.key}`}>
-                                <li className="list-group-item d-flex gap-2" onClick={() => setActiveKey(item.key)}>
+                                <li className={`list-group-item d-flex gap-2 ${item.key === activeKey ? 'active' : ''}`} onClick={() => setActiveKey(item.key)}>
                                     {item.Icon}
                                     {item.title}
                                 </li>

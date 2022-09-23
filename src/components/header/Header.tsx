@@ -49,8 +49,12 @@ const Header = () => {
     const isAuth = useSelector((state: RootReducerState) => state.AuthReducer.currentUser)
     const username = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.username)
     const img = useSelector((state: RootReducerState) => state.AuthReducer.infoUser?.img)
-
+    const cartItems = useSelector((state: RootReducerState) => state.CartReducer.cartItems)
     const totalQuantity = useSelector((state: RootReducerState) => state.CartReducer.totalQuantity)
+    const totalAmount = useSelector((state: RootReducerState) => state.CartReducer.totalAmount)
+
+    console.log('totalQuantity', totalQuantity)
+
     const dispatch = useDispatch()
 
     const toggleMenu = () => menuRef.current!.classList.toggle('show__menu')

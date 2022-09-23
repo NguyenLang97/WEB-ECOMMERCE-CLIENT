@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM } from './cart.action'
+import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, RESET_CART } from './cart.action'
 import { Button, message, Row } from 'antd'
 
 const initialState = {
@@ -68,7 +68,12 @@ const CartReducer = (state = initialState, action) => {
                 totalAmount: state.totalAmount,
             }
         }
-
+        case RESET_CART:
+            return {
+                cartItems: [],
+                totalQuantity: 0,
+                totalAmount: 0,
+            }
         // Xoa 1 san pham
         case REMOVE_ITEM:
             const id = action.payload

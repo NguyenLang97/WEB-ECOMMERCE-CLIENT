@@ -10,10 +10,10 @@ const SuccessfulTransaction = () => {
                 subTitle="Xem chi tiết đơn hàng vừa rồi"
                 extra={[
                     <Button type="default" key="0">
-                        <Link to={'/orders'}>Xem chi tiết đơn hàng</Link>
+                        <Link to={'/account/orders'}>Xem chi tiết đơn hàng</Link>
                     </Button>,
                     <Button key="1" type="primary">
-                        <Link to="/">Tiếp tục mua sắm</Link>
+                        <Link to="/products">Tiếp tục mua sắm</Link>
                     </Button>,
                 ]}
             />

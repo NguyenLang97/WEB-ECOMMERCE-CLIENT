@@ -1,16 +1,19 @@
 import { call, take, put, all, takeEvery } from 'redux-saga/effects'
 import { AUTH_START, authSuccess, authFail, LOGOUT_START, logoutSuccess, logoutFail } from '../auth/auth.action'
+import { Button, Col, message, Row, Tooltip, Input } from 'antd'
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth, db } from '../../firebase/firebase_config'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
+import { push } from 'connected-react-router'
+import { history } from '../../utils'
 
 const registerUser = async ({ email, password, username, fullname }) => {
     console.log('email, password', email)
     console.log('email, password', password)
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password)
-        console.log('res', res)
+        console.log('res', res.status)
         await setDoc(doc(db, 'users', res.user.uid), {
             email,
             password,
@@ -23,6 +26,7 @@ const registerUser = async ({ email, password, username, fullname }) => {
             user: null,
         }
     } catch (error) {
+        message.error('Đã có tài khoản trên hệ thống')
         console.log('error is :', error.message)
     }
 }
@@ -70,11 +74,24 @@ function* authenticate({ email, password, isRegister, fullname, username }) {
             console.log('isRegister :', isRegister)
             data = yield call(registerUser, { email, password, fullname, username })
             console.log('data register :', data)
+            history.push('/login')
         } else {
             data = yield call(loginUser, { email, password })
             console.log('data login123 :', data)
+            history.push('/')
         }
+
+        console.log('1', data)
         yield put(authSuccess(data))
+
+        // dieu huong sang trang khac
+        // history.push('/login')
+        // yield put(push('/login'))
+        // window.history.pushState({}, '', '/login')
+
+        // Tai lai trang nhung bi reload
+        // window.location.reload()
+
         return data
     } catch (error) {
         yield put(authFail(error.message))
@@ -95,6 +112,7 @@ function* authFlow() {
         const { payload } = yield take(AUTH_START)
         console.log('isRegister :: ', payload)
         const uid = yield call(authenticate, payload)
+
         console.log('uid :', uid)
         if (uid) {
             // yield take(LOGOUT_START)

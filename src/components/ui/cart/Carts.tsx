@@ -19,7 +19,8 @@ const Carts = () => {
         localStorage.setItem('cart', JSON.stringify(cartItems))
         localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity))
         localStorage.setItem('totalAmount', JSON.stringify(totalAmount))
-    }, [totalQuantity])
+    }, [cartItems])
+
     const toggleCart = () => {
         dispatch(toggleCartUi(false))
     }
@@ -41,11 +42,11 @@ const Carts = () => {
 
                 <div className="cart__bottom d-flex align-items-center justify-content-between">
                     <h6>
-                        Subtotal : <span>${totalAmount}</span>
+                        Tổng tiền : <span>${totalAmount}</span>
                     </h6>
                     <button>
                         <Link to="/checkout" onClick={toggleCart}>
-                            Checkout
+                            Thanh toán
                         </Link>
                     </button>
                 </div>

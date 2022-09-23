@@ -29,7 +29,6 @@ const Register = () => {
         const isRegister = true
         console.log({ email, password, isRegister, fullname, username })
         dispatch(authStart({ email, password, isRegister, fullname, username }))
-        navigate('/login')
     }
 
     return (

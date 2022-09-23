@@ -7,19 +7,21 @@ import 'remixicon/fonts/remixicon.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import './index.scss'
+import { history } from '../src/utils'
 
 import store from './store/store'
 import { Provider } from 'react-redux'
-
+import { ConnectedRouter } from 'connected-react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Router>
-            <Provider store={store}>
+        <Provider store={store}>
+            <HistoryRouter history={history} >
                 <App />
-            </Provider>
-        </Router>
+            </HistoryRouter>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 )

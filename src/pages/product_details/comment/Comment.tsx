@@ -160,7 +160,7 @@ const Comment = () => {
                     <div className="comment__review w-100 p-4">
                         {data?.commentUser !== undefined ? (
                             data?.commentUser.map((item: CommentUserState, index: number) => (
-                                <div key={index} className="d-flex flex-column">
+                                <div key={index} className="d-flex flex-column mt-4">
                                     <div className="comment__user-wrap d-flex">
                                         <div className="comment__user review d-flex">
                                             <img src={item.imgUser} className="comment__user-img rounded-circle" />
