@@ -36,7 +36,7 @@ const ProfileUser = () => {
 
                 <div className="form__group">
                     <label htmlFor="">Email</label>
-
+                    
                     <Input type="email" placeholder="Enter your email" value={enterEmail} required onChange={(e) => setEnterEmail(e.target.value)} />
                 </div>
                 <div className="form__group">
